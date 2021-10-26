@@ -1,0 +1,26 @@
+
+URL: http://localhost/musicUploadsSite/index.php
+phpMyadmin: http://localhost/phpmyadmin/db_structure.php?db=music_uploads_site
+
+stack overflow: https://stackoverflow.com/questions/18826147/javascript-audio-play-on-click
+
+
+Notes in concatenations:
+
+ ## Note echo "<h2>" . $row['title'] . "</h2>";   There is multiple concatinations the  ; ends the echo
+ ## Point is, echo " <input type='text' name='id_to_update' value='" . $row['session_id'] . "'> ";      " ends the string, you add a . then . " to  start then next concatenation string
+
+CRUD:
+*the session_uid gets put into each post so you know which user posted the post, 
+then make the while loop, 
+add the content,
+while still in the while loop, make a conditional statement so edit buttons show only for logged-in user and if the post was published by the logged-in user, 
+if (isset($_SESSION['uid']) && $_SESSION['uid'] == $row['session_id']),
+ add the buttons for edit, and delete which are just buttons that will trigger the forms below that display:none to display:block , 
+ then add the update and delete forms which carry the post id, and fields you will be updating,
+
+TIMESTAMPS:
+the date()formatting: https://www.php.net/manual/en/function.date.php
+the strtotime(): https://www.php.net/manual/en/function.strtotime.php    date("jS F, Y", strtotime("11-12-10"));      
+date formatting the date() function and use strtotime inside of it
+traversey media: https://www.youtube.com/watch?v=EHfr-edosmA

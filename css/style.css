@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+}
+/* nav */
+nav {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 20px 100px;
+  background-color: #333;
+}
+
+nav h2 {
+  color: rgb(238, 43, 17);
+}
+
+nav span {
+  color: rgb(39, 157, 235);
+}
+
+nav ul {
+  width: fit-content;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav ul li {
+  padding: 5px 20px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* main-page */
+
+/* login register */
+.modal_background {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(230, 230, 240, 0.8);
+  position: fixed;
+  top: 0;
+  z-index: 4;
+}
+
+.login_modal {
+  display: none;
+  width: fit-content;
+  background-color: #fff;
+  padding: 95px 35px;
+  position: fixed;
+  z-index: 5;
+  top: 100px;
+  /* center modal with left:0; right:0; margin:auto; */
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.register_modal {
+  display: none;
+  width: fit-content;
+  background-color: #fff;
+  padding: 95px 35px;
+  position: fixed;
+  z-index: 5;
+  top: 100px;
+  /* center modal with left:0; right:0; margin:auto; */
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.activate_display {
+  display: block;
+}
+
+.login_modal form,
+.register_modal form {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login_modal input,
+.register_modal input {
+  height: 35px;
+  font-size: 16px;
+  padding: 0 0 0 7px;
+  margin: 10px 0;
+
+  outline: none;
+}
+
+.login_modal input[type='submit'],
+.register_modal input[type='submit'] {
+  border: none;
+  background-color: teal;
+
+  color: #fff;
+}
+
+/* top-row */
+.top-row {
+  padding: 10px;
+}
+
+/* messages */
+.messages {
+  padding: 10px;
+  color: red;
+}
+
+/* audio */
+.parent {
+  display: flex;
+
+  padding: 10px 20px;
+  margin: 10px 0;
+
+  background-color: rgb(148, 139, 139);
+}
+
+.contain-buttons {
+  padding: 0 10px;
+}
+.contain-buttons i {
+  padding: 0 5px;
+  font-size: 18px;
+}
+
+.contain-title-src .title {
+  color: rgb(47, 46, 46);
+  font-size: 12px;
+}
+
+.timestamp {
+  font-size: 10px;
+}
+
+/* edit forms */
+.update_title_form,
+.delete_form {
+  display: none;
+}

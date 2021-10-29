@@ -10,6 +10,17 @@ Notes in concatenations:
  ## Note echo "<h2>" . $row['title'] . "</h2>";   There is multiple concatinations the  ; ends the echo
  ## Point is, echo " <input type='text' name='id_to_update' value='" . $row['session_id'] . "'> ";      " ends the string, you add a . then . " to  start then next concatenation string
 
+To concatenate into a query remember to use the right characters. notice below the = is followed by ' then "  then .  then the $_GET  then "  then ' then "  then ;
+   **  $sql2 = "SELECT * FROM posts JOIN users ON users.uid = posts.session_uid WHERE users.username = '" . $_GET['user'] . " '";
+
+$_GET[ ] 
+In the posts there wll be an anchor tag <a href=' '>  that will have a query string  of ?user=username.
+ if (!isset($_GET['user']))  all public posts will show, else it will show the $_GET['username'] persons posts only as if it's their prfile
+** <a href='./?user=" . $author['username'] . " '>" . $author['username'] . " </a>
+
+
+
+
 CRUD:
 *the session_uid gets put into each post so you know which user posted the post, 
 then make the while loop, 

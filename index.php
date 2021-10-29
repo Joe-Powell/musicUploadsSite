@@ -76,7 +76,7 @@ if (isset($_POST['publish_post'])) {
     <nav>
         <h2>U<span>p</span>l<span>o</span>a<span>d</span>e<span>d</span></h2>
         <ul>
-            <li>Home</li>
+            <li><a href='./'>Home</a></li>
             <li class='login_nav_btn'>Login</li>
             <li class='register_nav_btn'>Sign-up</li>
 
@@ -150,11 +150,21 @@ if (isset($_POST['publish_post'])) {
 
 
         <?php
-        $sql2 = "SELECT * FROM posts";
-        $result = $conn->query($sql2);
-        while ($row = $result->fetch_assoc()) {
-            echo
-            "
+        # home page no user ---------------------------
+        if (!isset($_GET['user'])) {
+            $sql = "SELECT * FROM posts";
+            $result = $conn->query($sql);
+            while ($row = $result->fetch_assoc()) {
+
+                $sql_author = "SELECT username FROM users
+                            WHERE users.uid = '" . $row['session_uid'] . "' ";
+
+                $result2 = $conn->query($sql_author);
+                $author = $result2->fetch_assoc();
+                //var_dump($author['username']);
+
+                echo
+                "
             <div class='parent'>
                 <div class='contain-buttons'>
                     <i class='fas fa-play'></i>
@@ -163,18 +173,20 @@ if (isset($_POST['publish_post'])) {
                 </div>
                 <div class='contain-title-src'>
                     <h2 class='title'>" . $row['title'] . "</h2>
-                    <span class='timestamp'>Published: " . date('m/d/Y h:i A', strtotime($row['time_stamp'])) . "</span>
-                    
+                    <span class='author' > Published by: <a href='./?user=" . $author['username'] . " '>" . $author['username'] . " </a></span>
+                    <span class='timestamp'>On " . date('m/d/Y h:i A', strtotime($row['time_stamp'])) . "</span>
                     <audio src='uploads/" . $row['url'] . " ' class='audio'> </audio>
                       
                 </div>";   #Close echo here so can make an if statement for an edit button, and delete btn. The closing div is at the bottom before closing while loop
 
-            if (isset($_SESSION['uid']) && $_SESSION['uid'] == $row['session_uid']) {
-                echo  " <button class='edit-btn'>Edit</button>
-                <button class='delete-btn'>Delete</button>
+                if (isset($_SESSION['uid']) && $_SESSION['uid'] == $row['session_uid']) {
+                    echo  " <div class='edit-btns'>
+                    <button class='edit-btn'>Edit</button>
+                    <button class='delete-btn'>Delete</button>
+                    </div>
                 ";
-                # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
-                echo "
+                    # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
+                    echo "
                 <form action='/' method='post' class='update_title_form' enctype='multipart/form-data'>
                     <input type='text' name='id_to_update' value='" . $row['id'] . "'>  
                     <input type='text' name='title_to_update' value='" . $row['title'] . "'>
@@ -186,8 +198,61 @@ if (isset($_POST['publish_post'])) {
                </form>
                
                 ";
+                }
+                echo "</div>"; # Closing div of parent
             }
-            echo "</div>"; # Closing div of parent
+        } else { # user profile -----------------------
+
+            $sql = "SELECT * FROM posts JOIN users ON users.uid = posts.session_uid WHERE users.username = '" . $_GET['user'] . " '";
+            $result = $conn->query($sql);    //var_dump($author['username']);
+
+            while ($row = $result->fetch_assoc()) {
+
+                $sql_author = "SELECT username FROM users
+                            WHERE users.uid = '" . $row['session_uid'] . "' ";
+
+                $result2 = $conn->query($sql_author);
+                $author = $result2->fetch_assoc();
+                //var_dump($author['username']);
+
+                echo
+                "
+            <div class='parent'>
+                <div class='contain-buttons'>
+                    <i class='fas fa-play'></i>
+                    <i class='far fa-pause-circle'></i>
+                    <i class='fas fa-stop'></i>
+                </div>
+                <div class='contain-title-src'>
+                    <h2 class='title'>" . $row['title'] . "</h2>
+                    <span class='author' > Published by: <a href='./?user=" . $author['username'] . " '>" . $author['username'] . " </a></span>
+                    <span class='timestamp'>On " . date('m/d/Y h:i A', strtotime($row['time_stamp'])) . "</span>
+                    <audio src='uploads/" . $row['url'] . " ' class='audio'> </audio>
+                      
+                </div>";   #Close echo here so can make an if statement for an edit button, and delete btn. The closing div is at the bottom before closing while loop
+
+                if (isset($_SESSION['uid']) && $_SESSION['uid'] == $row['session_uid']) {
+                    echo  " <div class='edit-btns'>
+                    <button class='edit-btn'>Edit</button>
+                    <button class='delete-btn'>Delete</button>
+                    </div>
+                ";
+                    # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
+                    echo "
+                <form action='/' method='post' class='update_title_form' enctype='multipart/form-data'>
+                    <input type='text' name='id_to_update' value='" . $row['id'] . "'>  
+                    <input type='text' name='title_to_update' value='" . $row['title'] . "'>
+                    <input type='submit' name='update_submission' value='Publish'>
+               </form>
+                <form action='/' method='post' class='delete_form'>
+                    <input type='text' name='id_to_delete' value='" . $row['id'] . "'>
+                    <input type='submit' name='delete_submission' value='Delete Item'>
+               </form>
+               
+                ";
+                }
+                echo "</div>"; # Closing div of parent
+            }
         }
 
 

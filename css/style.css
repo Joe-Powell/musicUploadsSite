@@ -38,6 +38,10 @@ nav ul li {
   cursor: pointer;
 }
 
+nav ul li a {
+  color: white;
+}
+
 /* main-page */
 
 /* login register */
@@ -113,19 +117,16 @@ nav ul li {
   padding: 10px;
 }
 
-/* messages */
 .messages {
   padding: 10px;
   color: red;
 }
 
-/* audio */
+/* parent */
 .parent {
   display: flex;
-
   padding: 10px 20px;
   margin: 10px 0;
-
   background-color: rgb(148, 139, 139);
 }
 
@@ -138,12 +139,29 @@ nav ul li {
 }
 
 .contain-title-src .title {
+  padding: 0 0 5px;
   color: rgb(47, 46, 46);
-  font-size: 12px;
+  font-size: 14px;
+}
+
+.author {
+  display: block;
+  font-size: 14px;
 }
 
 .timestamp {
   font-size: 10px;
+}
+
+.edit-btns {
+  margin-left: 20px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 50% 5px 0;
+  border: none;
+  background-color: transparent;
 }
 
 /* edit forms */

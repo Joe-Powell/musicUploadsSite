@@ -18,7 +18,14 @@ In the posts there wll be an anchor tag <a href=' '>  that will have a query str
  if (!isset($_GET['user']))  all public posts will show, else it will show the $_GET['username'] persons posts only as if it's their prfile
 ** <a href='./?user=" . $author['username'] . " '>" . $author['username'] . " </a>
 
+concatenate associative array examples -------------------------------------------------------
+$car_year = array("Nissan" => '2002', "Toyota" => '2003', "Honda" => '2004');
+$string = "The car year of a honda is " . $car_year['honda'] . " rest of string";
 
+$users_query_result = array("uid" => '1', "name" => 'Joe', "username" => 'joe', "Password" => '56789');
+$posts_qury_result = array("id" => '1', "user_id" => '1', "post" => 'hello');
+
+------------------------------------------------------------------------------------------------
 
 
 CRUD:

@@ -43,6 +43,14 @@ if (isset($_POST['publish_post'])) {
 }
 
 
+# ---------Delete post ---------------------
+
+if (isset($_POST['delete_submission'])) {
+    $id = $_POST['id_to_delete'];
+
+    $query = "DELETE FROM posts WHERE id = '$id'";
+    $conn->query($query);
+}
 
 
 
@@ -73,10 +81,12 @@ if (isset($_POST['publish_post'])) {
 <body>
 
 
-    <nav>
+    <nav class='nav'>
         <h2>U<span>p</span>l<span>o</span>a<span>d</span>e<span>d</span></h2>
         <ul>
-            <li><a href='./'>Home</a></li>
+            <a href='./'>
+                <li>Home</li>
+            </a>
             <li class='login_nav_btn'>Login</li>
             <li class='register_nav_btn'>Sign-up</li>
 
@@ -93,6 +103,36 @@ if (isset($_POST['publish_post'])) {
 
         </ul>
     </nav>
+
+
+
+
+    <!-- nav 4 Mobile -->
+    <nav class='nav_mobile'>
+
+        <ul>
+            <a href='./'>
+                <li>Home</li>
+            </a>
+            <li class='login_nav_btn'>Login</li>
+            <li class='register_nav_btn'>Sign-up</li>
+
+
+            <!--Logout button if logged in to destroy session-->
+            <?php if (isset($_SESSION['uid'])) { ?>
+                <li>
+                    <form class='logoutForm' method='post' action='./'>
+                        <button type='submit' class='logOutBtn' name='logout_submission'> Logout</button>
+                    </form>
+                </li>
+            <?php  } ?>
+
+
+        </ul>
+    </nav>
+
+
+
 
     <!-- LOGIN/REGISTER MODALS POP UPS -->
     <div class="modal_background"></div>
@@ -130,10 +170,12 @@ if (isset($_POST['publish_post'])) {
             <section class="top-row">
                 <form action='index.php' method='post' enctype="multipart/form-data">
                     <input type='file' class='music_file_upload' name='music_file_upload' value='upload file' hidden='hidden'>
-                    <button type='button' class='button_for_upload'>Upload</button>
-                    <input type='text' name='title' placeholder='title'>
-                    <input type='hidden' name='session_uid' value='<?php echo $_SESSION['uid'] ?>'>
-                    <input type='submit' name='publish_post'>
+                    <button type='button' class='button_for_upload'>Choose File</button>
+                    <div class='contain_input_and_submit'>
+                        <input type='text' name='title' placeholder='Title' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'">
+                        <input type='hidden' name='session_uid' value='<?php echo $_SESSION['uid'] ?>'>
+                        <input type='submit' name='publish_post'>
+                    </div>
                 </form>
 
 
@@ -156,9 +198,7 @@ if (isset($_POST['publish_post'])) {
             $result = $conn->query($sql);
             while ($row = $result->fetch_assoc()) {
 
-                $sql_author = "SELECT username FROM users
-                            WHERE users.uid = '" . $row['session_uid'] . "' ";
-
+                $sql_author = "SELECT username FROM users WHERE users.uid = '" .  $row['session_uid'] . "' ";
                 $result2 = $conn->query($sql_author);
                 $author = $result2->fetch_assoc();
                 //var_dump($author['username']);
@@ -187,30 +227,30 @@ if (isset($_POST['publish_post'])) {
                 ";
                     # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
                     echo "
-                <form action='/' method='post' class='update_title_form' enctype='multipart/form-data'>
-                    <input type='text' name='id_to_update' value='" . $row['id'] . "'>  
+                <form action='./' method='post' class='edit_form' enctype='multipart/form-data'>
+                    <input type='hidden' name='id_to_update' value='" . $row['id'] . "'>  
                     <input type='text' name='title_to_update' value='" . $row['title'] . "'>
                     <input type='submit' name='update_submission' value='Publish'>
+                    <p class='cancel_update'>Cancel</p>
                </form>
-                <form action='/' method='post' class='delete_form'>
-                    <input type='text' name='id_to_delete' value='" . $row['id'] . "'>
-                    <input type='submit' name='delete_submission' value='Delete Item'>
+                <form action='./' method='post' class='delete_form'>
+                    <h2>Do you want to delete this file ?   </h2>
+                    <input type='hidden' name='id_to_delete' value='" . $row['id'] . "'>
+                    <input type='submit' name='delete_submission' value='DELETE'>
+                    <a href='#' class='cancel_delete' >No</a>
                </form>
                
                 ";
                 }
                 echo "</div>"; # Closing div of parent
             }
-        } else { # user profile -----------------------
+        } else { # user profile $_GET['username'] 
 
             $sql = "SELECT * FROM posts JOIN users ON users.uid = posts.session_uid WHERE users.username = '" . $_GET['user'] . " '";
             $result = $conn->query($sql);    //var_dump($author['username']);
 
             while ($row = $result->fetch_assoc()) {
-
-                $sql_author = "SELECT username FROM users
-                            WHERE users.uid = '" . $row['session_uid'] . "' ";
-
+                $sql_author = "SELECT username FROM users WHERE users.uid = '" .  $row['session_uid'] . "' ";
                 $result2 = $conn->query($sql_author);
                 $author = $result2->fetch_assoc();
                 //var_dump($author['username']);
@@ -239,14 +279,17 @@ if (isset($_POST['publish_post'])) {
                 ";
                     # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
                     echo "
-                <form action='/' method='post' class='update_title_form' enctype='multipart/form-data'>
-                    <input type='text' name='id_to_update' value='" . $row['id'] . "'>  
+                <form action='./' method='post' class='edit_form' enctype='multipart/form-data'>
+                    <input type='hidden' name='id_to_update' value='" . $row['id'] . "'>  
                     <input type='text' name='title_to_update' value='" . $row['title'] . "'>
                     <input type='submit' name='update_submission' value='Publish'>
+                    <p class='cancel_update'>Cancel</p>
                </form>
-                <form action='/' method='post' class='delete_form'>
-                    <input type='text' name='id_to_delete' value='" . $row['id'] . "'>
-                    <input type='submit' name='delete_submission' value='Delete Item'>
+                <form action='./' method='post' class='delete_form'>
+                    <h2>Do you want to delete this file ?   </h2>
+                    <input type='hidden' name='id_to_delete' value='" . $row['id'] . "'>
+                    <input type='submit' name='delete_submission' value='DELETE'>
+                    <a href='#' class='cancel_delete' >No</a>
                </form>
                
                 ";

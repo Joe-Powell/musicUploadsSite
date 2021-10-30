@@ -8,8 +8,13 @@
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
 }
-/* nav */
-nav {
+
+body {
+  width: 100vw;
+}
+/* ---- nav ---- */
+.nav {
+  width: 100vw;
   display: flex;
   justify-content: space-between;
 
@@ -17,29 +22,55 @@ nav {
   background-color: #333;
 }
 
-nav h2 {
+.nav h2 {
   color: rgb(238, 43, 17);
 }
 
-nav span {
+.nav span {
   color: rgb(39, 157, 235);
 }
 
-nav ul {
+.nav ul {
   width: fit-content;
   display: flex;
   justify-content: space-between;
 }
 
-nav ul li {
+.nav ul li {
   padding: 5px 20px;
   font-size: 18px;
   color: #fff;
   cursor: pointer;
 }
 
-nav ul li a {
+.nav ul li a {
   color: white;
+}
+
+/* ---- nav 4 mobile ---- */
+.nav_mobile {
+  display: none;
+  background-color: #333;
+  padding: 25px 0;
+}
+.nav_mobile ul {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+.nav_mobile ul li {
+  color: #fff;
+  padding: 10px 10px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.nav_mobile ul li a {
+  color: white;
+}
+
+.nav_mobile ul li:hover {
+  background-color: rgb(41, 33, 33);
 }
 
 /* main-page */
@@ -83,10 +114,6 @@ nav ul li a {
   margin: auto;
 }
 
-.activate_display {
-  display: block;
-}
-
 .login_modal form,
 .register_modal form {
   width: 300px;
@@ -120,6 +147,46 @@ nav ul li a {
 .messages {
   padding: 10px;
   color: red;
+}
+
+.button_for_upload {
+  padding: 5px 10px;
+  border: 1px solid black;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.7s;
+}
+
+.button_for_upload:hover {
+  background-color: blanchedalmond;
+}
+
+.contain_input_and_submit {
+  display: none;
+}
+
+input[name='title'] {
+  width: 150px;
+  height: 26px;
+  font-size: 16px;
+  padding: 0 0 0 7px;
+  margin: 10px 15px 0 15px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+input[name='title']::placeholder {
+  color: black;
+  font-size: 13px;
+}
+
+input[name='publish_post'] {
+  padding: 3px 6px;
+  border: none;
+  background-color: teal;
+
+  color: #fff;
 }
 
 /* parent */
@@ -165,7 +232,42 @@ nav ul li a {
 }
 
 /* edit forms */
-.update_title_form,
+.edit_form,
 .delete_form {
   display: none;
+  width: fit-content;
+  height: fit-content;
+  padding: 40px;
+  background-color: white;
+  border: 1px solid black;
+
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.delete_form input[name='delete_submission'] {
+  width: fit-content;
+  padding: 6px 12px; /* Make padding left-right always double the top-bottom  */
+  margin: 15px 15px 0 0;
+  border: none;
+  background-color: red;
+  color: #fff;
+}
+
+.cancel_delete {
+  padding: 6px 12px;
+  background-color: rgb(147, 147, 240);
+  color: #fff;
+}
+
+.cancel_update {
+  color: red;
+  margin: 10px 0 0;
+}
+
+.activate_display {
+  display: block;
 }

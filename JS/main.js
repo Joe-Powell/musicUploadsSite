@@ -3,29 +3,35 @@
 // login and register modals
 
 const modal_background = document.querySelector('.modal_background')
+const login_nav_btn = document.querySelectorAll('.login_nav_btn');
+const register_nav_btn = document.querySelectorAll('.register_nav_btn');
+const login_modal = document.querySelector('.login_modal')
+const register_modal = document.querySelector('.register_modal')
 
 modal_background.addEventListener('click', () => {
-    modal_background.classList.toggle('activate_display')
+    modal_background.classList.remove('activate_display')
     login_modal.classList.remove('activate_display')
     register_modal.classList.remove('activate_display')
 })
 
-const login_nav_btn = document.querySelector('.login_nav_btn');
-const login_modal = document.querySelector('.login_modal')
+for(let i =0; i < login_nav_btn.length; i++) {
 
-login_nav_btn.addEventListener('click', () => {
+
+
+login_nav_btn[i].addEventListener('click', () => {
     modal_background.classList.toggle('activate_display')
     login_modal.classList.toggle('activate_display')
 })
 
 
-const register_nav_btn = document.querySelector('.register_nav_btn');
-const register_modal = document.querySelector('.register_modal')
-
-register_nav_btn.addEventListener('click', () => {
+register_nav_btn[i].addEventListener('click', () => {
     modal_background.classList.toggle('activate_display')
     register_modal.classList.toggle('activate_display')
 })
+
+}
+
+
 
 
 
@@ -33,13 +39,69 @@ register_nav_btn.addEventListener('click', () => {
 
 const button_for_upload = document.querySelector('.button_for_upload');
 const music_file_upload = document.querySelector('.music_file_upload');
+const contain_input_and_submit = document.querySelector('.contain_input_and_submit')
 
 // added if because when not logged in the error comes up for button_for_upload
 if(button_for_upload){
     button_for_upload.addEventListener('click', () => {
         music_file_upload.click()
+        contain_input_and_submit.style.display = 'inline-block';
     })
 }
+
+
+
+
+
+
+// Click on delete button
+const delete_btns = document.querySelectorAll('.delete-btn');
+const delete_forms = document.querySelectorAll('.delete_form')
+const delete_form_cancel =  document.querySelectorAll('.delete_form .cancel_delete')
+for(let i =0; i < delete_btns.length; i++) {
+
+delete_btns[i].addEventListener('click', () => {
+    console.log('clicked')
+    delete_forms[i].classList.toggle('activate_display')
+})
+
+delete_form_cancel[i].addEventListener('click', () => {
+    delete_forms[i].classList.toggle('activate_display')
+})
+
+
+}
+
+
+
+
+// Click on edit button
+const edit_btns = document.querySelectorAll('.edit-btn');
+const edit_forms = document.querySelectorAll('.edit_form')
+const cancel_update = document.querySelectorAll('.cancel_update')
+for(let i =0; i < edit_btns.length; i++) {
+
+edit_btns[i].addEventListener('click', () => {
+    console.log('clicked')
+    edit_forms[i].classList.toggle('activate_display')
+})
+
+cancel_update[i].addEventListener('click', () => {
+   edit_forms[i].classList.toggle('activate_display') 
+})
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

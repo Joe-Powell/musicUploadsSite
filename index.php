@@ -92,14 +92,19 @@ if (isset($_POST['update_submission'])) {
 
 
     <nav class='nav'>
-        <h2>U<span>p</span>l<span>o</span>a<span>d</span>e<span>d</span></h2>
+        <h2>Upload</h2>
         <ul>
             <a href='./'>
                 <li>Home</li>
             </a>
-            <li class='login_nav_btn'>Login</li>
-            <li class='register_nav_btn'>Sign-up</li>
-
+            <?php if (!isset($_SESSION['uid'])) { ?>
+                <li class='login_nav_btn'>Login</li>
+                <li class='register_nav_btn'>Sign-up</li>
+            <?php  } ?>
+            <?php if (isset($_SESSION['uid'])) { ?>
+                <li>About</li>
+                <li>Contact</li>
+            <?php  } ?>
 
             <!--Logout button if logged in to destroy session-->
             <?php if (isset($_SESSION['uid'])) { ?>
@@ -126,8 +131,14 @@ if (isset($_POST['update_submission'])) {
             <a href='./'>
                 <li>Home</li>
             </a>
-            <li class='login_nav_btn'>Login</li>
-            <li class='register_nav_btn'>Sign-up</li>
+            <?php if (!isset($_SESSION['uid'])) { ?>
+                <li class='login_nav_btn'>Login</li>
+                <li class='register_nav_btn'>Sign-up</li>
+            <?php  } ?>
+            <?php if (isset($_SESSION['uid'])) { ?>
+                <li>About</li>
+                <li>Contact</li>
+            <?php  } ?>
 
 
             <!--Logout button if logged in to destroy session-->
@@ -137,6 +148,8 @@ if (isset($_POST['update_submission'])) {
                         <button type='submit' class='logOutBtn' name='logout_submission'> Logout</button>
                     </form>
                 </li>
+            <?php  } else { ?>
+                <li>About</li>
             <?php  } ?>
 
 
@@ -152,8 +165,8 @@ if (isset($_POST['update_submission'])) {
     <section class="login_modal">
         <h2>Login</h2>
         <form action='index.php' method='post'>
-            <input type='text' name='username' placeholder='Username'>
-            <input type='text' name='password' placeholder='password'>
+            <input type='text' name='unameEmail' placeholder='Username or Email '>
+            <input type='text' name='password' placeholder='password '>
             <input type='submit' name='submit_login' value='Login'>
         </form>
     </section>
@@ -161,8 +174,9 @@ if (isset($_POST['update_submission'])) {
     <section class="register_modal">
         <h2>Register here</h2>
         <form action='index.php' method='post'>
-            <input type='text' name='username' placeholder='Username'>
-            <input type='text' name='password' placeholder='password'>
+            <input type='text' name='email' placeholder='Email'>
+            <input type='text' name='username' placeholder='Username  6 characters minimum'>
+            <input type='text' name='password' placeholder='password  6 characters minimum'>
             <input type='submit' name='submit_registration'>
 
 
@@ -217,7 +231,7 @@ if (isset($_POST['update_submission'])) {
         <?php
         # home page no user ---------------------------
         if (!isset($_GET['user'])) {
-            $sql = "SELECT * FROM posts";
+            $sql = "SELECT * FROM posts ORDER BY time_stamp DESC";
             $result = $conn->query($sql);
             while ($row = $result->fetch_assoc()) {
 
@@ -237,7 +251,7 @@ if (isset($_POST['update_submission'])) {
                 <div class='contain-title-src'>
                     <h2 class='title'>" . $row['title'] . "</h2>
                     <span class='author' > Published by: <a href='./?user=" . $author['username'] . " '>" . $author['username'] . " </a></span>
-                    <span class='timestamp'>On " . date('m/d/Y h:i A', strtotime($row['time_stamp'])) . "</span>
+                    <span class='timestamp'>" . date('m/d/Y h:i A', strtotime($row['time_stamp'])) . "</span>
                     <audio src='uploads/" . $row['url'] . " ' class='audio'> </audio>
                       
                 </div>";   #Close echo here so can make an if statement for an edit button, and delete btn. The closing div is at the bottom before closing while loop
@@ -254,13 +268,13 @@ if (isset($_POST['update_submission'])) {
                     <input type='hidden' name='id_to_update' value='" . $row['id'] . "'>  
                     <input type='text' name='title_to_update' value='" . $row['title'] . "'>
                     <input type='submit' name='update_submission' value='Publish'>
-                    <p class='cancel_update'>Cancel</p>
+                    <a href='#' class='cancel_update'>Cancel</a>
                </form>
                 <form action='./' method='post' class='delete_form'>
                     <h2>Do you want to delete this file ?   </h2>
                     <input type='hidden' name='id_to_delete' value='" . $row['id'] . "'>
                     <input type='submit' name='delete_submission' value='DELETE'>
-                    <a href='#' class='cancel_delete' >No</a>
+                    <input type='button' class='cancel_delete' value='No' >
                </form>
                
                 ";
@@ -289,7 +303,7 @@ if (isset($_POST['update_submission'])) {
                 <div class='contain-title-src'>
                     <h2 class='title'>" . $row['title'] . "</h2>
                     <span class='author' > Published by: <a href='./?user=" . $author['username'] . " '>" . $author['username'] . " </a></span>
-                    <span class='timestamp'>On " . date('m/d/Y h:i A', strtotime($row['time_stamp'])) . "</span>
+                    <span class='timestamp'>" . date('m/d/Y h:i A', strtotime($row['time_stamp'])) . "</span>
                     <audio src='uploads/" . $row['url'] . " ' class='audio'> </audio>
                       
                 </div>";   #Close echo here so can make an if statement for an edit button, and delete btn. The closing div is at the bottom before closing while loop

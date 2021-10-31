@@ -1,10 +1,10 @@
 <?php
 
 if (isset($_POST['submit_login'])) {
-    $username = $conn->real_escape_string($_POST['username']);
+    $unameEmail = $conn->real_escape_string($_POST['unameEmail']);
     $password = $conn->real_escape_string($_POST['password']);
-    if (!empty($username) && !empty($password)) {
-        $query = "SELECT * FROM users WHERE username='$username' AND password='$password' ";
+    if (!empty($unameEmail) && !empty($password)) {
+        $query = "SELECT * FROM users WHERE email='$unameEmail' OR username='$unameEmail' AND password='$password' ";
         $result = $conn->query($query);
         $user =  $result->fetch_assoc();
 

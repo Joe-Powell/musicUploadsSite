@@ -42,3 +42,37 @@ the date()formatting: https://www.php.net/manual/en/function.date.php
 the strtotime(): https://www.php.net/manual/en/function.strtotime.php    date("jS F, Y", strtotime("11-12-10"));      
 date formatting the date() function and use strtotime inside of it
 traversey media: https://www.youtube.com/watch?v=EHfr-edosmA
+
+
+
+
+
+
+
+
+Modal Transitions:
+
+These two get toggled together plus the main_page itself gets padding added to the top when click on hamburger menu
+
+-----These 2 work together----
+
+      .nav_mobile_ul {
+      height: 0px; 
+      overflow: hidden;
+      transition: 0.7s;
+      }
+
+      .activate_submenu {
+      height: 200px;
+      }
+
+-----These 2 work together----
+
+      .main_page {
+      padding: 80px 0 0;
+      transition: 0.7s;
+      }
+
+      .activate_add_padding {
+      padding: 290px 0 0;
+      }

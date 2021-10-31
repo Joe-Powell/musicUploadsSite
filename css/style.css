@@ -12,13 +12,16 @@
 body {
   background-color: rgb(68, 65, 65);
 }
+
 /* ---- nav ---- */
 .nav {
   width: 100vw;
   display: flex;
+  position: fixed;
+  z-index: 3;
   justify-content: space-between;
   padding: 20px 100px;
-  background-color: #333;
+  background-color: rgb(46, 43, 43);
 }
 @media (max-width: 675px) {
   .nav {
@@ -30,10 +33,7 @@ body {
 
 .nav h2 {
   color: rgb(238, 43, 17);
-}
-
-.nav span {
-  color: rgb(39, 157, 235);
+  font-size: 16px;
 }
 
 .nav ul {
@@ -51,12 +51,12 @@ body {
 .nav ul li {
   padding: 5px 20px;
   font-size: 18px;
-  color: #fff;
+  color: rgb(175, 171, 171);
   cursor: pointer;
 }
 
 .nav ul li a {
-  color: white;
+  color: rgb(175, 171, 171);
 }
 
 .nav .fa-bars {
@@ -71,34 +71,54 @@ body {
   }
 }
 
-/* ---- nav 4 mobile ---- */
-.nav_mobile {
-  background-color: #333;
-  padding: 25px 0;
+.logOutBtn {
+  color: #fff;
+  color: red;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 3px 6px;
+  transition: 0.7s;
 }
+
+.logOutBtn:hover {
+  background-color: rgb(223, 224, 231);
+  color: black;
+}
+
+/* ---- nav 4 mobile ---- */
+
+.nav_mobile {
+  position: fixed;
+  z-index: 3;
+  background-color: rgb(46, 43, 43);
+  margin: 74px 0 0;
+}
+
+/* ------------------------------------------------------ */
 .nav_mobile_ul {
-  height: 0px; /* from 170px see .activate_submenu below */
+  height: 0px; /* from 200px see .activate_submenu below */
   overflow: hidden;
-  transition: 1s;
   width: 100vw;
   display: flex;
   flex-direction: column;
-  transition: 1s;
+  transition: 0.7s;
 }
 
 .activate_submenu {
-  height: 190px;
+  height: 200px;
 }
+/* --------------------------------------------------------- */
 
 .nav_mobile ul li {
-  color: #fff;
+  color: rgb(175, 171, 171);
   padding: 14px 10px;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
 }
 
 .nav_mobile ul li a {
-  color: white;
+  color: rgb(175, 171, 171);
 }
 
 .nav_mobile ul li:hover {
@@ -138,7 +158,6 @@ body {
   position: fixed;
   z-index: 5;
   top: 100px;
-  /* center modal with left:0; right:0; margin:auto; */
   left: 0;
   right: 0;
   margin: auto;
@@ -165,18 +184,24 @@ body {
 .register_modal input[type='submit'] {
   border: none;
   background-color: teal;
-
   color: #fff;
 }
 
+/* ---- main_page ---- */
+
 .main_page {
   position: relative;
-  margin: 30px 0 0;
+  padding: 80px 0 0;
+  transition: 0.7s;
+}
+
+.activate_add_padding {
+  padding: 290px 0 0;
 }
 
 .main-audio-div {
   position: absolute;
-  display: flex;
+  display: none;
   top: 0px;
   right: 25px;
 }
@@ -198,16 +223,16 @@ body {
 
 .button_for_upload {
   padding: 5px 10px;
-  border: 1px solid #fff;
+  border: 1px solid rgb(175, 171, 171);
   background-color: transparent;
-  color: #fff;
+  color: rgb(175, 171, 171);
   cursor: pointer;
   transition: 0.7s;
 }
 
 .button_for_upload:hover {
-  background-color: rgb(223, 224, 231);
-  color: black;
+  background-color: rgb(175, 171, 171);
+  color: rgb(68, 65, 65);
 }
 
 .input_and_publish_btn {
@@ -239,33 +264,54 @@ input[name='publish_post'] {
 
 /*----  parent ----*/
 .parent {
+  width: 100vw;
   display: flex;
-  padding: 10px 20px;
+  padding: 20px;
   margin: 10px 0;
-  background-color: rgb(70, 150, 241);
+  background-color: rgb(46, 43, 43);
 }
 
 .contain-buttons {
-  padding: 0 10px;
+  padding: 15px 10px 0;
 }
-.contain-buttons i {
+
+.fa-play,
+.fa-pause-circle,
+.fa-stop {
   padding: 0 5px;
-  font-size: 18px;
+  font-size: 24px;
+  color: rgb(175, 171, 171);
+}
+
+.activate_player_button_clicked {
+  color: white;
+}
+
+.contain-title-src {
+  margin: 0 0 0 10px;
 }
 
 .contain-title-src .title {
   padding: 0 0 5px;
-  color: rgb(47, 46, 46);
+  color: rgb(175, 171, 171);
   font-size: 14px;
 }
 
 .author {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
+  color: rgb(175, 171, 171);
+}
+
+.author a {
+  color: red;
+  cursor: pointer;
+  margin: 0 0 0 4px;
 }
 
 .timestamp {
   font-size: 10px;
+  color: rgb(113, 122, 238);
 }
 
 .edit-btns {
@@ -274,12 +320,20 @@ input[name='publish_post'] {
 
 .edit-btn,
 .delete-btn {
-  padding: 50% 5px 0;
+  padding: 50% 3px 0;
   border: none;
+  color: rgb(175, 171, 171);
   background-color: transparent;
 }
 
+@media (max-width: 528px) {
+  .edit-btns {
+    display: block;
+  }
+}
+
 /* edit forms */
+
 .edit_form,
 .delete_form {
   display: none;
@@ -298,23 +352,30 @@ input[name='publish_post'] {
 
 .delete_form input[name='delete_submission'] {
   width: fit-content;
-  padding: 6px 12px; /* Make padding left-right always double the top-bottom  */
+  padding: 6px 12px;
   margin: 15px 15px 0 0;
   border: none;
   background-color: red;
   color: #fff;
+  border-radius: 2.5px;
 }
 
 .cancel_delete {
   padding: 6px 12px;
   background-color: rgb(147, 147, 240);
   color: #fff;
+  border: none;
+  border-radius: 2.5px;
 }
 
 .cancel_update {
   color: red;
   margin: 10px 0 0;
 }
+
+/* ACTIVATE display:block  used with:
+  [login and register, modal_background, delete-btn, delete_form, 
+  edit-btn, edit_form, cancel_update, ect. ] */
 
 .activate_display {
   display: block;

@@ -116,14 +116,13 @@ const main_audio_div_h3 = document.querySelector('.main-audio-div h3')
 const title = document.querySelectorAll('.title')
 
 for(let i =0; i < audios_with_src.length; i++) {
+
  play[i].addEventListener('click', (e) => {
      
     main_player.src = audios_with_src[i].src;
     main_player.play()
-
-    // main_audio_div_h3.innerHTML= title[i].innerHTML;
-
-      
+    
+    
     })
 
 pause[i].addEventListener('click', () => {
@@ -153,9 +152,11 @@ stop[i].addEventListener('click', () => {
 
 const Hamburger_menu_bars = document.querySelector('.nav .fa-bars')
 const nav_mobile_ul = document.querySelector('.nav_mobile ul')
+const main_page = document.querySelector('.main_page')
 
 Hamburger_menu_bars.addEventListener('click', () => {
     nav_mobile_ul.classList.toggle('activate_submenu')
+    main_page.classList.toggle('activate_add_padding')
 })
 
 

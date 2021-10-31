@@ -15,9 +15,8 @@ if (isset($_POST['publish_post'])) {
         $fileType = $file['type'];
 
 
-        echo $fileName . '<br>' . $fileTmpName . '<br>';
-
-        var_dump($file);
+        //echo $fileName . '<br>' . $fileTmpName . '<br>';
+        //var_dump($file);
 
 
 
@@ -49,6 +48,17 @@ if (isset($_POST['delete_submission'])) {
     $id = $_POST['id_to_delete'];
 
     $query = "DELETE FROM posts WHERE id = '$id'";
+    $conn->query($query);
+}
+
+
+# ---------Update post ---------------------
+
+if (isset($_POST['update_submission'])) {
+    $id = $_POST['id_to_update'];
+    $new_title = $_POST['title_to_update'];
+
+    $query =  "UPDATE posts SET title='$new_title' WHERE id='$id' ";
     $conn->query($query);
 }
 
@@ -102,6 +112,8 @@ if (isset($_POST['delete_submission'])) {
 
 
         </ul>
+
+        <i class="fas fa-bars"> </i>
     </nav>
 
 
@@ -110,7 +122,7 @@ if (isset($_POST['delete_submission'])) {
     <!-- nav 4 Mobile -->
     <nav class='nav_mobile'>
 
-        <ul>
+        <ul class='nav_mobile_ul'>
             <a href='./'>
                 <li>Home</li>
             </a>
@@ -171,7 +183,7 @@ if (isset($_POST['delete_submission'])) {
                 <form action='index.php' method='post' enctype="multipart/form-data">
                     <input type='file' class='music_file_upload' name='music_file_upload' value='upload file' hidden='hidden'>
                     <button type='button' class='button_for_upload'>Choose File</button>
-                    <div class='contain_input_and_submit'>
+                    <div class='input_and_publish_btn'>
                         <input type='text' name='title' placeholder='Title' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'">
                         <input type='hidden' name='session_uid' value='<?php echo $_SESSION['uid'] ?>'>
                         <input type='submit' name='publish_post'>
@@ -182,6 +194,17 @@ if (isset($_POST['delete_submission'])) {
             </section>
 
         <?php  } ?>
+
+
+        <!-- PLAYER -->
+        <div class="main-audio-div">
+            <h3></h3>
+            <audio class='main-audio' controls>
+                <source src="#" type="audio/mp3">
+            </audio>
+        </div>
+
+
 
 
 
@@ -305,12 +328,7 @@ if (isset($_POST['delete_submission'])) {
 
 
 
-        <div class="main-audio-div">
-            <h3></h3>
-            <audio class='main-audio' controls>
-                <source src="#" type="audio/mp3">
-            </audio>
-        </div>
+
 
     </section>
 

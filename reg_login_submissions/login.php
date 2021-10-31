@@ -11,6 +11,8 @@ if (isset($_POST['submit_login'])) {
         if (mysqli_num_rows($result) === 1) {
             $_SESSION['uid'] = $user['uid'];
             $message = "Sucessfully logged in!";
+
+            // header("Location: ./?user=" . $user['username'] . " ");
         } else {
             $message = "please try again email taken";
         }

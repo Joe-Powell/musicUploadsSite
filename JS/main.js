@@ -39,13 +39,13 @@ register_nav_btn[i].addEventListener('click', () => {
 
 const button_for_upload = document.querySelector('.button_for_upload');
 const music_file_upload = document.querySelector('.music_file_upload');
-const contain_input_and_submit = document.querySelector('.contain_input_and_submit')
+const input_and_publish_btn = document.querySelector('.input_and_publish_btn')
 
 // added if because when not logged in the error comes up for button_for_upload
 if(button_for_upload){
     button_for_upload.addEventListener('click', () => {
         music_file_upload.click()
-        contain_input_and_submit.style.display = 'inline-block';
+        input_and_publish_btn.style.display = 'inline-block';
     })
 }
 
@@ -121,14 +121,22 @@ for(let i =0; i < audios_with_src.length; i++) {
     main_player.src = audios_with_src[i].src;
     main_player.play()
 
-    main_audio_div_h3.innerHTML= title[i].innerHTML;
+    // main_audio_div_h3.innerHTML= title[i].innerHTML;
 
       
     })
 
 pause[i].addEventListener('click', () => {
-    main_player.pause()
+    
+    if (main_player.paused) {
+        main_player.play();
+    }
+    else {
+        main_player.pause();
+    }
+  
 })
+
 
 stop[i].addEventListener('click', () => {
     main_player.pause()
@@ -137,5 +145,19 @@ stop[i].addEventListener('click', () => {
 
 
 }
+
+
+
+
+// When click on the Hamburger menu
+
+const Hamburger_menu_bars = document.querySelector('.nav .fa-bars')
+const nav_mobile_ul = document.querySelector('.nav_mobile ul')
+
+Hamburger_menu_bars.addEventListener('click', () => {
+    nav_mobile_ul.classList.toggle('activate_submenu')
+})
+
+
 
 

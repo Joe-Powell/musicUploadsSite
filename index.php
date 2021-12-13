@@ -186,31 +186,65 @@ if (isset($_POST['update_submission'])) {
 
 
 
+
+
+
+
+
+
+
+
+
     <!-- Main page -->
     <section class="main_page">
 
 
-        <!-- Must be logged in for the upload option and top row-->
-        <?php if (isset($_SESSION['uid'])) { ?>
-
-            <section class="top-row">
-                <form action='index.php' method='post' enctype="multipart/form-data">
-                    <input type='file' class='music_file_upload' name='music_file_upload' value='upload file' hidden='hidden'>
-                    <button type='button' class='button_for_upload'>Choose File</button>
-                    <div class='input_and_publish_btn'>
-                        <input type='text' name='title' placeholder='Title' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'">
-                        <input type='hidden' name='session_uid' value='<?php echo $_SESSION['uid'] ?>'>
-                        <input type='submit' name='publish_post'>
-                    </div>
-                </form>
 
 
-            </section>
+        <!-- Profile section and upload button with form if logged in  -->
+        <?php if (isset($_SESSION['uid'])) {
 
-        <?php  } ?>
+            $sql_person_logged_in = "SELECT * FROM users WHERE users.uid = '" .  $_SESSION['uid'] . "' ";
+            $result = $conn->query($sql_person_logged_in);
+            $person = $result->fetch_assoc();
+            echo '<section class="Profile_div"> 
+                        <div class= "prof-info">
+                            <p>Hello ' . $person['username'] . '</p>
+                            <p>Member since:' .  date('m/d/Y', strtotime($person['time_stamp'])) . '</p>
+                            <p class="edit_pro_btn">Edit Profile</p> 
+                        </div>
+                        <div class="upload-btn-div">
+                            <form action="index.php" method="post" enctype="multipart/form-data">
+                                <input type="file" class="music_file_upload" name="music_file_upload" value="upload file" hidden="hidden">
+                                <button type="button" class="button_for_upload">Choose File</button>
+                                <div class="input_and_publish_btn">
+                                    <input type="text" name="title" placeholder="Title">
+                                    <input type="hidden" name="session_uid" value="' . $_SESSION["uid"] . '">
+                                    <input type="submit" name="publish_post">
+                                </div>
+                            </form>
+                        </div>
+                </section>';
+        } else {
+
+            echo  '<div class="Profile_div">
+                <p>Welcome to Upload, Please sign in to upload tracks.</p>
+            
+            </div>
+            ';
+        }
 
 
-        <!-- PLAYER -->
+
+
+
+        ?>
+
+
+
+
+
+        <!-- Hidden Player -->
         <div class="main-audio-div">
             <h3></h3>
             <audio class='main-audio' controls>
@@ -222,27 +256,34 @@ if (isset($_POST['update_submission'])) {
 
 
 
-        <!-- messages from login/register -->
-        <?php if (isset($message)) {  ?>
-            <h3 class='messages'><?php echo $message ?></h3>
-        <?php } ?>
 
 
-        <?php
-        # home page no user ---------------------------
-        if (!isset($_GET['user'])) {
-            $sql = "SELECT * FROM posts ORDER BY time_stamp DESC";
-            $result = $conn->query($sql);
-            while ($row = $result->fetch_assoc()) {
+        <section class='posts'>
 
-                $sql_author = "SELECT username FROM users WHERE users.uid = '" .  $row['session_uid'] . "' ";
-                $result2 = $conn->query($sql_author);
-                $author = $result2->fetch_assoc();
-                //var_dump($author['username']);
+            <!-- messages from login/register -->
+            <?php if (isset($message)) {  ?>
+                <h3 class='messages'><?php echo $message ?></h3>
+            <?php } ?>
 
-                echo
-                "
+
+            <?php
+            # home page no user ---------------------------
+            if (!isset($_GET['user'])) {
+                $sql = "SELECT * FROM posts ORDER BY time_stamp DESC";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+
+                    $sql_author = "SELECT username FROM users WHERE users.uid = '" .  $row['session_uid'] . "' ";
+                    $result2 = $conn->query($sql_author);
+                    $author = $result2->fetch_assoc();
+                    //var_dump($author['username']);
+
+                    echo
+                    "
             <div class='parent'>
+            <div class='containProgressBar'>
+                <div class='progress'></div>
+            </div>
                 <div class='contain-buttons'>
                     <i class='fas fa-play'></i>
                     <i class='far fa-pause-circle'></i>
@@ -256,14 +297,14 @@ if (isset($_POST['update_submission'])) {
                       
                 </div>";   #Close echo here so can make an if statement for an edit button, and delete btn. The closing div is at the bottom before closing while loop
 
-                if (isset($_SESSION['uid']) && $_SESSION['uid'] == $row['session_uid']) {
-                    echo  " <div class='edit-btns'>
+                    if (isset($_SESSION['uid']) && $_SESSION['uid'] == $row['session_uid']) {
+                        echo  " <div class='edit-btns'>
                     <button class='edit-btn'>Edit</button>
                     <button class='delete-btn'>Delete</button>
                     </div>
                 ";
-                    # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
-                    echo "
+                        # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
+                        echo "
                 <form action='./' method='post' class='edit_form' enctype='multipart/form-data'>
                     <input type='hidden' name='id_to_update' value='" . $row['id'] . "'>  
                     <input type='text' name='title_to_update' value='" . $row['title'] . "'>
@@ -278,22 +319,21 @@ if (isset($_POST['update_submission'])) {
                </form>
                
                 ";
+                    }
+                    echo "</div> </section>"; # Closing div of parent and posts section 
                 }
-                echo "</div>"; # Closing div of parent
-            }
-        } else { # user profile $_GET['username'] 
+            } else { # user profile $_GET['username'] 
 
-            $sql = "SELECT * FROM posts JOIN users ON users.uid = posts.session_uid WHERE users.username = '" . $_GET['user'] . " '";
-            $result = $conn->query($sql);    //var_dump($author['username']);
+                $sql = "SELECT * FROM posts JOIN users ON users.uid = posts.session_uid WHERE users.username = '" . $_GET['user'] . " '";
+                $result = $conn->query($sql);    //var_dump($author['username']);
 
-            while ($row = $result->fetch_assoc()) {
-                $sql_author = "SELECT username FROM users WHERE users.uid = '" .  $row['session_uid'] . "' ";
-                $result2 = $conn->query($sql_author);
-                $author = $result2->fetch_assoc();
-                //var_dump($author['username']);
+                while ($row = $result->fetch_assoc()) {
+                    $sql_author = "SELECT username FROM users WHERE users.uid = '" .  $row['session_uid'] . "' ";
+                    $result2 = $conn->query($sql_author);
+                    $author = $result2->fetch_assoc();
+                    //var_dump($author['username']);
 
-                echo
-                "
+                    echo "
             <div class='parent'>
                 <div class='contain-buttons'>
                     <i class='fas fa-play'></i>
@@ -308,14 +348,14 @@ if (isset($_POST['update_submission'])) {
                       
                 </div>";   #Close echo here so can make an if statement for an edit button, and delete btn. The closing div is at the bottom before closing while loop
 
-                if (isset($_SESSION['uid']) && $_SESSION['uid'] == $row['session_uid']) {
-                    echo  " <div class='edit-btns'>
+                    if (isset($_SESSION['uid']) && $_SESSION['uid'] == $row['session_uid']) {
+                        echo  " <div class='edit-btns'>
                     <button class='edit-btn'>Edit</button>
                     <button class='delete-btn'>Delete</button>
                     </div>
                 ";
-                    # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
-                    echo "
+                        # These forms below will be display:none in css innitially the button will make them pop up using javaScript to loop through them
+                        echo "
                 <form action='./' method='post' class='edit_form' enctype='multipart/form-data'>
                     <input type='hidden' name='id_to_update' value='" . $row['id'] . "'>  
                     <input type='text' name='title_to_update' value='" . $row['title'] . "'>
@@ -330,24 +370,21 @@ if (isset($_POST['update_submission'])) {
                </form>
                
                 ";
+                    }
+                    echo "</div> </section>"; # Closing div of parent and posts section
                 }
-                echo "</div>"; # Closing div of parent
             }
-        }
 
 
 
-        ?>
+            ?>
 
 
 
 
 
 
-    </section>
-
-
-
+        </section>
 
 
 
@@ -380,7 +417,10 @@ if (isset($_POST['update_submission'])) {
 
 
 
-    <script src='JS/main.js'></script>
+
+
+
+        <script src='JS/main.js'></script>
 
 </body>
 

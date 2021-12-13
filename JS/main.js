@@ -114,13 +114,41 @@ const stop = document.querySelectorAll('.fa-stop')
 const main_player = document.querySelector('.main-audio')
 const main_audio_div_h3 = document.querySelector('.main-audio-div h3')
 const title = document.querySelectorAll('.title')
+const containProgressBar = document.querySelectorAll('.containProgressBar')
+const progress = document.querySelectorAll('.progress')
 
 for(let i =0; i < audios_with_src.length; i++) {
+
+         //  For progress bar
+         main_player.addEventListener('timeupdate', (e) => {
+           // console.log((e.target.currentTime  / main_player.duration) *100)
+            const percentage = (e.target.currentTime  / main_player.duration) *100;
+            progress[i].style.width = `${percentage}%`;
+
+        })
+
+        containProgressBar[i].onclick = (e) => {
+            console.log(e)
+            
+            const clickedOffsetX = e.offsetX;
+            const width = e.target.offsetWidth;
+            const duration =audios_with_src[i].duration;
+            console.log('e.offesetX' ,clickedOffsetX)
+            console.log('width ' ,width)      
+            console.log('duration ',duration);
+
+            console.log((clickedOffsetX/ width) * duration)
+           main_player.currentTime =  (clickedOffsetX/ width) * duration;       // divide the clickedX by the entire width then * 100
+
+        }
+  
 
  play[i].addEventListener('click', (e) => {
      
     main_player.src = audios_with_src[i].src;
     main_player.play()
+
+   
     
     
     })

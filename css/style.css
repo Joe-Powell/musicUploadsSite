@@ -18,7 +18,7 @@ body {
   width: 100vw;
   display: flex;
   position: fixed;
-  z-index: 3;
+  z-index: 4;
   justify-content: space-between;
   padding: 20px 100px;
   background-color: rgb(46, 43, 43);
@@ -90,7 +90,7 @@ body {
 
 .nav_mobile {
   position: fixed;
-  z-index: 3;
+  z-index: 4;
   background-color: rgb(46, 43, 43);
   margin: 74px 0 0;
 }
@@ -187,9 +187,36 @@ body {
   color: #fff;
 }
 
+/* ---- Profile section */
+
+.Profile_div {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  height: fit-content;
+  position: fixed;
+  color: rgb(230, 221, 221);
+  background-color: rgb(70, 66, 66);
+  padding: 25px 15px 5px;
+  z-index: 3;
+}
+
+.Profile_div .edit_pro_btn {
+  width: fit-content;
+  color: rgb(230, 221, 221);
+  padding: 3px 6px;
+  margin: 7px 0 0 0;
+  font-size: 12px;
+}
+
+.upload-btn-div {
+  padding: 30px 10px;
+}
+
 /* ---- main_page ---- */
 
 .main_page {
+  height: fit-content;
   position: relative;
   padding: 80px 0 0;
   transition: 0.7s;
@@ -204,21 +231,6 @@ body {
   display: none;
   top: 0px;
   right: 25px;
-}
-@media (max-width: 768px) {
-  .main-audio-div {
-    position: static;
-    display: none;
-  }
-}
-
-.top-row {
-  padding: 10px 10px 30px;
-}
-
-.messages {
-  padding: 10px;
-  color: red;
 }
 
 .button_for_upload {
@@ -262,13 +274,36 @@ input[name='publish_post'] {
   color: #fff;
 }
 
+.posts {
+  padding: 120px 0 0;
+}
+
+.messages {
+  padding: 10px;
+  color: red;
+}
+
 /*----  parent ----*/
 .parent {
   width: 100vw;
   display: flex;
+  flex-wrap: wrap;
   padding: 20px;
   margin: 10px 0;
   background-color: rgb(46, 43, 43);
+}
+
+/* Progress bar */
+.containProgressBar {
+  width: 500px;
+  height: 30px;
+  margin: 5px 0;
+  background-color: rgb(90, 88, 85);
+}
+.progress {
+  height: 100%;
+  width: 0%;
+  background-color: orange;
 }
 
 .contain-buttons {
@@ -278,9 +313,9 @@ input[name='publish_post'] {
 .fa-play,
 .fa-pause-circle,
 .fa-stop {
-  padding: 0 5px;
+  padding: 0 8px;
   font-size: 24px;
-  color: rgb(175, 171, 171);
+  color: rgb(236, 232, 232);
 }
 
 .activate_player_button_clicked {
@@ -314,10 +349,6 @@ input[name='publish_post'] {
   color: rgb(113, 122, 238);
 }
 
-.edit-btns {
-  margin-left: 20px;
-}
-
 .edit-btn,
 .delete-btn {
   padding: 50% 3px 0;
@@ -327,8 +358,25 @@ input[name='publish_post'] {
 }
 
 @media (max-width: 528px) {
+  .contain-buttons {
+    padding: 15px 10px 0 0;
+  }
+
+  .fa-play,
+  .fa-pause-circle,
+  .fa-stop {
+    padding: 0 14px;
+    font-size: 32px;
+  }
+
   .edit-btns {
-    display: block;
+    flex-basis: 100%; /* having the container set to flex and flex-wrap: wrap; will make this item have its own row   */
+    margin-left: 20px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 12px 15px 0;
   }
 }
 
